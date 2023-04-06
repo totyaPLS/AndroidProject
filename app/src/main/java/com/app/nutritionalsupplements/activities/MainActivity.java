@@ -11,9 +11,6 @@ import android.widget.EditText;
 import com.app.nutritionalsupplements.R;
 
 public class MainActivity extends AppCompatActivity {
-    /**
-     * hey
-     */
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final int SECRET_KEY = 99;
     public static String PACKAGE_NAME;
