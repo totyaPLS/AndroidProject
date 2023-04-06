@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.nutritionalsupplements.R;
 
-public class RegistrationActivity extends AppCompatActivity {
-    private static final String LOG_TAG = RegistrationActivity.class.getName();
+public class SignUpActivity extends AppCompatActivity {
+    private static final String LOG_TAG = SignUpActivity.class.getName();
     private static final String PREF_KEY = MainActivity.PACKAGE_NAME;
 
     @Override

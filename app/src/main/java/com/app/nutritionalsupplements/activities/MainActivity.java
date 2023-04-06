@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void registration(View view) {
-        Intent intent = new Intent(this, RegistrationActivity.class);
+        Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
         // TODO
         startActivity(intent);

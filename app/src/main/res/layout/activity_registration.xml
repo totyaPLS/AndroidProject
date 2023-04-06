@@ -1,110 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.RegistrationActivity">
+    android:fillViewport="true">
 
-
-    <TextView
-        android:id="@+id/registration_text"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="50dp"
-        android:text="@string/registration"
-        android:textAlignment="center"
-        android:textSize="24sp" />
+        tools:context=".activities.SignUpActivity">
 
-    <EditText
-        android:id="@+id/username"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="60dp"
-        android:layout_below="@+id/registration_text"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
-        android:autofillHints="username"
-        android:ems="10"
-        android:hint="@string/username"
-        android:inputType="text" />
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="60dp"
-        android:layout_below="@+id/username"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
-        android:autofillHints="email"
-        android:ems="10"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress" />
+        <TextView
+            android:id="@+id/registration_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="50dp"
+            android:text="@string/registration"
+            android:textAlignment="center"
+            android:textSize="24sp" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="60dp"
-        android:layout_below="@+id/email"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
-        android:autofillHints="password"
-        android:ems="10"
-        android:hint="@string/password"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/registration_text"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
+            android:autofillHints="username"
+            android:ems="10"
+            android:hint="@string/username"
+            android:inputType="text" />
 
-    <EditText
-        android:id="@+id/password_again"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="60dp"
-        android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
-        android:autofillHints="password"
-        android:ems="10"
-        android:hint="@string/passwordAgain"
-        android:inputType="textPassword" />
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:autofillHints="email"
+            android:ems="10"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress" />
 
-    <EditText
-        android:id="@+id/mobile_num"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="60dp"
-        android:layout_below="@+id/password_again"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
-        android:autofillHints="password"
-        android:ems="10"
-        android:hint="@string/mobile"
-        android:inputType="phone" />
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/email"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="@string/password"
+            android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/spinner_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/mobile_num"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
-        android:layout_marginEnd="236dp"
-        android:labelFor="@+id/phone_spinner"
-        android:text="@string/choose_phone_type" />
+        <EditText
+            android:id="@+id/password_again"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:autofillHints="password"
+            android:ems="10"
+            android:hint="@string/passwordAgain"
+            android:inputType="textPassword" />
 
-    <Spinner
-        android:id="@+id/phone_spinner"
-        android:layout_width="@dimen/regEditTextLayoutWidth"
-        android:layout_height="50dp"
-        android:layout_below="@id/spinner_label"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"/>
+        <EditText
+            android:id="@+id/mobile_num"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/password_again"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:autofillHints="phone"
+            android:ems="10"
+            android:hint="@string/mobile"
+            android:inputType="phone" />
 
-    <Button
-        android:id="@+id/registration_btn_on_reg_site"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registration"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/phone_spinner"
-        android:layout_marginTop="40dp"/>
+        <EditText
+            android:id="@+id/postal_address"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="60dp"
+            android:layout_below="@+id/mobile_num"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:autofillHints="postalAddress"
+            android:ems="10"
+            android:hint="@string/postal_address"
+            android:inputType="textPostalAddress" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/spinner_label"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/postal_address"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
+            android:labelFor="@+id/phone_spinner"
+            android:text="@string/choose_phone_type" />
+
+        <Spinner
+            android:id="@+id/phone_spinner"
+            android:layout_width="@dimen/signUpCellsWidth"
+            android:layout_height="50dp"
+            android:layout_below="@id/spinner_label"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"/>
+
+        <Button
+            android:id="@+id/registration_btn_on_reg_site"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/phone_spinner"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="50dp"
+            android:text="@string/registration" />
+
+    </RelativeLayout>
+
+</ScrollView>
