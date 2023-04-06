@@ -10,4 +10,5 @@
     <string name="mobile">Mobile</string>
     <string name="choose_phone_type">Choose phone type</string>
     <string name="postal_address">Postal address</string>
+    <string name="back">Back</string>
 </resources>
