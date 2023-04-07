@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     EditText emailET;
     EditText passwordET;
     EditText passwordAgainET;
+    EditText phoneNumberET;
     EditText postalAddressET;
     Spinner spinner;
 
@@ -49,9 +51,15 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         emailET = findViewById(R.id.email);
         passwordET = findViewById(R.id.password);
         passwordAgainET = findViewById(R.id.password_again);
+        phoneNumberET = findViewById(R.id.mobile_num);
         postalAddressET = findViewById(R.id.postal_address);
+        spinner = findViewById(R.id.occupation_spinner);
 
         spinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.occupation, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
     }
 
     private void autofillFieldsFromLogin() {
@@ -61,18 +69,23 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void register(View view) {
+        getTextFromFields();
+    }
+
+    private void getTextFromFields() {
         String usernameStr = usernameET.getText().toString();
         String emailStr = emailET.getText().toString();
         String passwordStr = passwordET.getText().toString();
         String passwordAgainStr = passwordAgainET.getText().toString();
+        String phoneNumber = phoneNumberET.getText().toString();
         String addressStr = postalAddressET.getText().toString();
+        String occupation = spinner.getSelectedItem().toString();
 
         if (!passwordStr.equals(passwordAgainStr)) {
             Log.e(LOG_TAG, "The passwords do not match!");
-            return;
         }
 
-        Log.i(LOG_TAG, usernameStr + "; " + emailStr + "; " + passwordStr + "; " + passwordAgainStr + "; " + addressStr);
+//        Log.i(LOG_TAG, usernameStr + "; " + passwordStr + "; " + phoneNumber + "; " + occupation);
     }
 
     public void back(View view) {

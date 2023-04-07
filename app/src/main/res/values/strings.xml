@@ -8,7 +8,13 @@
     <string name="email">E-mail address</string>
     <string name="passwordAgain">Password again</string>
     <string name="mobile">Mobile</string>
-    <string name="choose_phone_type">Choose phone type</string>
+    <string name="choose_occupation">Choose occupation</string>
     <string name="postal_address">Postal address</string>
     <string name="back">Back</string>
+    <string-array name="occupation">
+        <item>Employed</item>
+        <item>Student</item>
+        <item>Retired</item>
+        <item>Other</item>
+    </string-array>
 </resources>

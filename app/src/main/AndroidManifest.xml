@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutritionalSupplementsApp"
         tools:targetApi="31">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:exported="false" />
         <activity android:name=".activities.SignUpActivity" />
         <activity
             android:name=".activities.MainActivity"
