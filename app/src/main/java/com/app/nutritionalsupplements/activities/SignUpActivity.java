@@ -1,5 +1,6 @@
 package com.app.nutritionalsupplements.activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,13 +12,14 @@ import com.app.nutritionalsupplements.R;
 
 public class SignUpActivity extends AppCompatActivity {
     private static final String LOG_TAG = SignUpActivity.class.getName();
-    private static final String PREF_KEY = MainActivity.PACKAGE_NAME;
+    private static String PREF_KEY;
+    private SharedPreferences preferences;
 
-    EditText username;
-    EditText email;
-    EditText password;
-    EditText passwordAgain;
-    EditText postalAddress;
+    EditText usernameET;
+    EditText emailET;
+    EditText passwordET;
+    EditText passwordAgainET;
+    EditText postalAddressET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,22 +33,29 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         initializeData();
+
+        String username = preferences.getString("username", "");
+        usernameET.setText(username);
     }
 
     private void initializeData() {
-        username = findViewById(R.id.username);
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        passwordAgain = findViewById(R.id.password_again);
-        postalAddress = findViewById(R.id.postal_address);
+        PREF_KEY = getApplicationContext().getPackageName();
+
+        usernameET = findViewById(R.id.username);
+        emailET = findViewById(R.id.email);
+        passwordET = findViewById(R.id.password);
+        passwordAgainET = findViewById(R.id.password_again);
+        postalAddressET = findViewById(R.id.postal_address);
+
+        preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
     }
 
     public void register(View view) {
-        String usernameStr = username.getText().toString();
-        String emailStr = email.getText().toString();
-        String passwordStr = password.getText().toString();
-        String passwordAgainStr = passwordAgain.getText().toString();
-        String addressStr = postalAddress.getText().toString();
+        String usernameStr = usernameET.getText().toString();
+        String emailStr = emailET.getText().toString();
+        String passwordStr = passwordET.getText().toString();
+        String passwordAgainStr = passwordAgainET.getText().toString();
+        String addressStr = postalAddressET.getText().toString();
 
         if (!passwordStr.equals(passwordAgainStr)) {
             Log.e(LOG_TAG, "The passwords do not match!");
