@@ -34,8 +34,9 @@ public class SignUpActivity extends AppCompatActivity {
 
         initializeData();
 
-        String username = preferences.getString("username", "");
-        usernameET.setText(username);
+        if (PREF_KEY != null) {
+            autofillFieldsFromLogin();
+        }
     }
 
     private void initializeData() {
@@ -46,8 +47,12 @@ public class SignUpActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.password);
         passwordAgainET = findViewById(R.id.password_again);
         postalAddressET = findViewById(R.id.postal_address);
+    }
 
+    private void autofillFieldsFromLogin() {
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
+        String username = preferences.getString("username", "");
+        usernameET.setText(username);
     }
 
     public void register(View view) {
