@@ -4,13 +4,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.nutritionalsupplements.R;
 
-public class SignUpActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String LOG_TAG = SignUpActivity.class.getName();
     private static String PREF_KEY;
     private SharedPreferences preferences;
@@ -20,6 +22,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText passwordET;
     EditText passwordAgainET;
     EditText postalAddressET;
+    Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,8 @@ public class SignUpActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.password);
         passwordAgainET = findViewById(R.id.password_again);
         postalAddressET = findViewById(R.id.postal_address);
+
+        spinner.setOnItemSelectedListener(this);
     }
 
     private void autofillFieldsFromLogin() {
@@ -72,5 +77,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void back(View view) {
         finish();
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        //TODO
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        //TODO
     }
 }
