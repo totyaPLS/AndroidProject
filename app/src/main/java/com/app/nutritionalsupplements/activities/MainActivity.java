@@ -3,11 +3,9 @@ package com.app.nutritionalsupplements.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,14 +21,25 @@ public class MainActivity extends AppCompatActivity {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            Log.d(LOG_TAG, "Authenticated user!");
+            Log.d(LOG_TAG, "Authenticated user!" + user.getEmail());
+            Log.d(LOG_TAG, "User is anonymous: " + user.isAnonymous());
         } else {
             Log.d(LOG_TAG, "Unauthenticated user!");
         }
     }
 
     public void openLoginActivity(View view) {
+        /*if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }*/
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth.getInstance().signOut();
     }
 }

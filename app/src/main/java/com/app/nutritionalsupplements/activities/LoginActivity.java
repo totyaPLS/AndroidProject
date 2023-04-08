@@ -8,14 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.app.nutritionalsupplements.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final String LOG_TAG = MainActivity.class.getName();
     private static final int SECRET_KEY = 99;
     private static String PREF_KEY;
+    private FirebaseAuth auth;
     private SharedPreferences preferences;
     EditText usernameET;
     EditText userPasswordET;
@@ -63,6 +69,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void initializeData() {
         PREF_KEY = getApplicationContext().getPackageName();
+        auth = FirebaseAuth.getInstance();
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
         usernameET = findViewById(R.id.editTextTextPersonName);
@@ -73,14 +80,31 @@ public class LoginActivity extends AppCompatActivity {
         String userNameStr = usernameET.getText().toString();
         String userPasswordStr = userPasswordET.getText().toString();
 
-        Log.i(LOG_TAG, "Logged in: " + userNameStr + ", password: " + userPasswordStr);
+        auth.signInWithEmailAndPassword(userNameStr, userPasswordStr).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.e(LOG_TAG, "User logged in successfully!");
+                startShoppingAfterSuccessfulLogin();
+            } else {
+                Log.e(LOG_TAG, "User didn't log in successfully :(");
+                Toast.makeText(LoginActivity.this,
+                        "User didn't log in successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Finishes all opened activities in the stack and opens a new shopping activity.
+     */
+    private void startShoppingAfterSuccessfulLogin() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finishAffinity();
     }
 
     public void openSignUpActivity(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        // TODO
         startActivity(intent);
     }
 }

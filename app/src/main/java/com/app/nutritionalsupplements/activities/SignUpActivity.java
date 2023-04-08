@@ -85,9 +85,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
         if (!passwordStr.equals(passwordAgainStr)) {
             Log.e(LOG_TAG, "The passwords do not match!");
+            // TODO: disable Sign Up button
         }
-
-//        Log.i(LOG_TAG, usernameStr + "; " + passwordStr + "; " + phoneNumber + "; " + occupation);
 
         registerUserIntoFirebase(emailStr, passwordStr);
     }
@@ -107,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     /**
-     * Finishes the login session and the registration, so it directs back to the shopping activity.
+     * Finishes all opened activities in the stack and opens a new shopping activity.
      */
     private void startShoppingAfterSuccessfulRegistration() {
         Intent intent = new Intent(this, MainActivity.class);
