@@ -1,5 +1,8 @@
 package com.app.nutritionalsupplements.activities;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,15 +11,19 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.app.nutritionalsupplements.R;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Objects;
 
 public class SignUpActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private static final String LOG_TAG = SignUpActivity.class.getName();
     private static String PREF_KEY;
-    private SharedPreferences preferences;
+    private FirebaseAuth auth;
 
     EditText usernameET;
     EditText emailET;
@@ -32,13 +39,11 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_registration);
 
         int secretKey = getIntent().getIntExtra("SECRET_KEY", 0);
-
         if (secretKey != 99) {
             finish();
         }
 
         initializeData();
-
         if (PREF_KEY != null) {
             autofillFieldsFromLogin();
         }
@@ -46,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void initializeData() {
         PREF_KEY = getApplicationContext().getPackageName();
+        auth = FirebaseAuth.getInstance();
 
         usernameET = findViewById(R.id.username);
         emailET = findViewById(R.id.email);
@@ -63,16 +69,12 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     private void autofillFieldsFromLogin() {
-        preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
+        SharedPreferences preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
         String username = preferences.getString("username", "");
         usernameET.setText(username);
     }
 
     public void register(View view) {
-        getTextFromFields();
-    }
-
-    private void getTextFromFields() {
         String usernameStr = usernameET.getText().toString();
         String emailStr = emailET.getText().toString();
         String passwordStr = passwordET.getText().toString();
@@ -86,6 +88,31 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         }
 
 //        Log.i(LOG_TAG, usernameStr + "; " + passwordStr + "; " + phoneNumber + "; " + occupation);
+
+        registerUserIntoFirebase(emailStr, passwordStr);
+    }
+
+    private void registerUserIntoFirebase(String email, String password) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
+            if (task.isSuccessful()) {
+                Log.d(LOG_TAG, "User created successfully!");
+                startShoppingAfterSuccessfulRegistration();
+            } else {
+                Log.e(LOG_TAG, "User wasn't created successfully :(");
+                Toast.makeText(SignUpActivity.this,
+                        "User wasn't created successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * Finishes the login session and the registration, so it directs back to the shopping activity.
+     */
+    private void startShoppingAfterSuccessfulRegistration() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finishAffinity();
     }
 
     public void back(View view) {

@@ -76,9 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         Log.i(LOG_TAG, "Logged in: " + userNameStr + ", password: " + userPasswordStr);
     }
 
-    public void signUp(View view) {
+    public void openSignUpActivity(View view) {
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         // TODO
         startActivity(intent);
     }

@@ -53,7 +53,7 @@
         android:id="@+id/registrationButton"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:onClick="signUp"
+        android:onClick="openSignUpActivity"
         android:text="@string/registration"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
