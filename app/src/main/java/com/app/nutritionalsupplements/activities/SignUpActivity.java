@@ -70,8 +70,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
 
     private void autofillFieldsFromLogin() {
         SharedPreferences preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
-        String username = preferences.getString("username", "");
-        usernameET.setText(username);
+        String email = preferences.getString("email", "");
+        emailET.setText(email);
     }
 
     public void register(View view) {
@@ -110,8 +110,9 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
      */
     private void startShoppingAfterSuccessfulRegistration() {
         Intent intent = new Intent(this, MainActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
-        finishAffinity();
+        finish();
     }
 
     public void back(View view) {

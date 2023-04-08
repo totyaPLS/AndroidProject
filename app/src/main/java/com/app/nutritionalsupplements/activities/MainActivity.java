@@ -7,13 +7,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getName();
@@ -26,19 +23,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        initializeData();
-        setUserAsGuestByDefault();
+        Log.e(LOG_TAG, "OnCreate has run...");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        initializeData();
 
-        if (user == null || user.isAnonymous()) {
+        if (user == null) {
+            Log.e(LOG_TAG, "Null user detected!");
             loginButton.setVisibility(View.VISIBLE);
             logoutButton.setVisibility(View.GONE);
         } else {
+            Log.e(LOG_TAG, "Authenticated user detected!" + user.getEmail());
             loginButton.setVisibility(View.GONE);
             logoutButton.setVisibility(View.VISIBLE);
         }
@@ -51,29 +49,8 @@ public class MainActivity extends AppCompatActivity {
         logoutButton = findViewById(R.id.logoutButton);
     }
 
-    private void setUserAsGuestByDefault() {
-        if (user == null) {
-            auth.signInAnonymously().addOnCompleteListener(this, task -> {
-                if (task.isSuccessful()) {
-                    user = auth.getCurrentUser();
-                    Log.e(LOG_TAG, "Anonymous user logged in successfully!");
-                } else {
-                    Log.e(LOG_TAG, "Anonymous user didn't log in successfully :(");
-                    Toast.makeText(MainActivity.this,
-                            "Anonymous user didn't log in successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else if (user.isAnonymous()){
-            Log.e(LOG_TAG, "Authenticated Anonymous user!" + user.getEmail());
-        } else {
-            Log.e(LOG_TAG, "Authenticated user!" + user.getEmail());
-        }
-    }
-
     public void openLoginActivity(View view) {
-        assert user != null;
-        if (user.isAnonymous()) {
+        if (user == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }

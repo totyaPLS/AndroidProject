@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     private static String PREF_KEY;
     private FirebaseAuth auth;
     private SharedPreferences preferences;
-    EditText usernameET;
+    EditText emailET;
     EditText userPasswordET;
 
     @Override
@@ -38,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("username", usernameET.getText().toString());
+        editor.putString("email", emailET.getText().toString());
         editor.apply();
     }
 
@@ -47,12 +46,12 @@ public class LoginActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         preferences = getSharedPreferences(PREF_KEY, MODE_PRIVATE);
 
-        usernameET = findViewById(R.id.editTextTextPersonName);
+        emailET = findViewById(R.id.editTextTextPersonName);
         userPasswordET = findViewById(R.id.editTextTextPassword);
     }
 
     public void login(View view) {
-        String userNameStr = usernameET.getText().toString();
+        String userNameStr = emailET.getText().toString();
         String userPasswordStr = userPasswordET.getText().toString();
 
         auth.signInWithEmailAndPassword(userNameStr, userPasswordStr).addOnCompleteListener(this, task -> {
@@ -72,5 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
+        finish(); // FIXME: it shouldn't finish here. It has to finish after the registration was successful
     }
 }
