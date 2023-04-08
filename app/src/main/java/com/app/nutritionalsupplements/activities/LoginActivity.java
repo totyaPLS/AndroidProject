@@ -35,36 +35,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("username", usernameET.getText().toString());
         editor.apply();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
     private void initializeData() {
@@ -83,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         auth.signInWithEmailAndPassword(userNameStr, userPasswordStr).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 Log.e(LOG_TAG, "User logged in successfully!");
-                startShoppingAfterSuccessfulLogin();
+                finish();
             } else {
                 Log.e(LOG_TAG, "User didn't log in successfully :(");
                 Toast.makeText(LoginActivity.this,
@@ -91,15 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    /**
-     * Finishes all opened activities in the stack and opens a new shopping activity.
-     */
-    private void startShoppingAfterSuccessfulLogin() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        finishAffinity();
     }
 
     public void openSignUpActivity(View view) {

@@ -11,6 +11,7 @@
     <string name="choose_occupation">Choose occupation</string>
     <string name="postal_address">Postal address</string>
     <string name="back">Back</string>
+    <string name="logout">Logout</string>
     <string-array name="occupation">
         <item>Employed</item>
         <item>Student</item>
