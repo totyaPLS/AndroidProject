@@ -102,6 +102,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             mProductImage.setImageResource(currentProduct.getImage());
             mTitleTextView.setText(currentProduct.getName());
             mRatingBar.setRating(currentProduct.getRateValue());
+            mPrice.setText(currentProduct.getPrice());
 
             Glide.with(mContext)
                     .load(currentProduct.getImage())
