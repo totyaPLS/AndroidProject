@@ -22,4 +22,40 @@
         <item>Retired</item>
         <item>Other</item>
     </string-array>
+
+    <string-array name="product_images">
+        <item>@drawable/bcaa</item>
+        <item>@drawable/creatine</item>
+        <item>@drawable/omega</item>
+        <item>@drawable/pump</item>
+        <item>@drawable/vitamins</item>
+        <item>@drawable/whey</item>
+    </string-array>
+
+    <string-array name="product_names">
+        <item>BCAA 200g</item>
+        <item>Creatin Monohydrate 1kg</item>
+        <item>Omega 3</item>
+        <item>Pump Pre-workout 330g</item>
+        <item>Daily Vitamin Pack</item>
+        <item>Pure Whey 1kg</item>
+    </string-array>
+
+    <string-array name="product_rates">
+        <item>3.5</item>
+        <item>5.0</item>
+        <item>4.0</item>
+        <item>4.5</item>
+        <item>4.0</item>
+        <item>4.5</item>
+    </string-array>
+
+    <string-array name="product_prices">
+        <item>3 990</item>
+        <item>15 890</item>
+        <item>590</item>
+        <item>5 990</item>
+        <item>4 530</item>
+        <item>8 990</item>
+    </string-array>
 </resources>

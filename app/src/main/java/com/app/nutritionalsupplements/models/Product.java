@@ -1,20 +1,24 @@
 package com.app.nutritionalsupplements.models;
 
+import android.widget.ImageView;
+
 public class Product {
-    private String name;
-    private float rateValue;
-    private int price;
+    private final int image;
+    private final String name;
+    private final float rateValue;
+    private final String price;
     private String description;
     private int weightGram;
 
-    public Product() {}
-
-    public Product(String name, float rateValue, int price, String description, int weightGram) {
+    public Product(int image, String name, float rateValue, String price) {
+        this.image = image;
         this.name = name;
         this.rateValue = rateValue;
         this.price = price;
-        this.description = description;
-        this.weightGram = weightGram;
+    }
+
+    public int getImage() {
+        return image;
     }
 
     public String getName() {
@@ -25,7 +29,7 @@ public class Product {
         return rateValue;
     }
 
-    public int getPrice() {
+    public String getPrice() {
         return price;
     }
 
