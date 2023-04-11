@@ -7,6 +7,7 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true"
+    app:cardPreventCornerOverlap="false"
     tools:context=".activities.MainActivity">
 
     <LinearLayout
@@ -67,6 +68,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/add_to_cart_relative_layout"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center">

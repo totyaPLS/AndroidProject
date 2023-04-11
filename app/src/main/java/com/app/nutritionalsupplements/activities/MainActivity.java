@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, GRID_NUMBER));
         mItemList = new ArrayList<>();
-        mAdapter = new ProductAdapter(this, mItemList);
+        mAdapter = new ProductAdapter(this, mItemList, checkLoginStatus());
         mRecyclerView.setAdapter(mAdapter);
 
         fillShoppingList();

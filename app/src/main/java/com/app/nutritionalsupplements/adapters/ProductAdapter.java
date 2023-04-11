@@ -11,6 +11,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,19 +21,22 @@ import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.models.Product;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements Filterable {
-    private ArrayList<Product> mProductsData;
+    private boolean mUserIsLoggedIn;
+    private final ArrayList<Product> mProductsData;
     private ArrayList<Product> mProductsDataAll;
-    private Context mContext;
+    private final Context mContext;
     private int mLastPosition = -1;
 
-    public ProductAdapter(Context context, ArrayList<Product> products) {
+    public ProductAdapter(Context context, ArrayList<Product> products, boolean userIsLoggedIn) {
         this.mProductsData = products;
         this.mProductsDataAll = products;
         this.mContext = context;
+        this.mUserIsLoggedIn = userIsLoggedIn;
     }
 
     @NonNull
@@ -44,7 +48,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @Override
     public void onBindViewHolder(ProductAdapter.ViewHolder holder, int position) {
         Product currentProduct = mProductsData.get(position);
-        holder.bindTo(currentProduct);
+        holder.bindTo(currentProduct, mUserIsLoggedIn);
 
         if (holder.getBindingAdapterPosition() > mLastPosition) {
             Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.slide_in_from_bottom_animation);
@@ -63,7 +67,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         return shoppingFilter;
     }
 
-    private Filter shoppingFilter = new Filter() {
+    private final Filter shoppingFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             // TODO
@@ -77,10 +81,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     };
 
     class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView mProductImage;
-        private TextView mTitleTextView;
-        private RatingBar mRatingBar;
-        private TextView mPrice;
+        private final ImageView mProductImage;
+        private final TextView mTitleTextView;
+        private final RatingBar mRatingBar;
+        private final TextView mPrice;
+        private final RelativeLayout mSecondRelativeLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -95,10 +100,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     Log.e("Activity", "Item added to cart.");
                 }
             });
+            mSecondRelativeLayout = itemView.findViewById(R.id.add_to_cart_relative_layout);
         }
 
 
-        public void bindTo(Product currentProduct) {
+        public void bindTo(Product currentProduct, boolean isUserLoggedIn) {
             mProductImage.setImageResource(currentProduct.getImage());
             mTitleTextView.setText(currentProduct.getName());
             mRatingBar.setRating(currentProduct.getRateValue());
@@ -108,6 +114,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     .load(currentProduct.getImage())
                     .transform(new RoundedCorners(50))
                     .into(mProductImage);
+
+            mSecondRelativeLayout.setVisibility(isUserLoggedIn ? View.VISIBLE : View.GONE);
         }
     }
 }
