@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.adapters.ProductAdapter;
@@ -20,7 +21,9 @@ import com.app.nutritionalsupplements.models.Product;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -86,24 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseFirestore mFirestore = FirebaseFirestore.getInstance();
         mItems = mFirestore.collection("Products");
-        queryData();
+        readProducts();
         uploadProductsIfCollectionIsEmpty();
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void queryData() {
-        mItemList.clear();
-
-        mItems.orderBy("name").limit(10).get().addOnSuccessListener(queryDocumentSnapshots -> {
-            for (QueryDocumentSnapshot document: queryDocumentSnapshots) {
-                Product product = document.toObject(Product.class);
-                mItemList.add(product);
-            }
-
-            if (mItemList.size() == 0) queryData();
-
-            mAdapter.notifyDataSetChanged();
-        });
     }
 
     public void uploadProductsIfCollectionIsEmpty() {
@@ -112,29 +99,12 @@ public class MainActivity extends AppCompatActivity {
         collectionRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (task.getResult().size() == 0) {
-                    uploadProductsToDatabase();
+                    createProducts();
                 }
             } else {
                 Log.e(LOG_TAG, "Error getting collection: " + task.getException());
             }
         });
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private void uploadProductsToDatabase() {
-        @SuppressLint("Recycle") TypedArray itemsImageResource = getResources().obtainTypedArray(R.array.product_images);
-        String[] itemsList = getResources().getStringArray(R.array.product_names);
-        @SuppressLint("Recycle") TypedArray itemsRate = getResources().obtainTypedArray(R.array.product_rates);
-        String[] itemsPrice = getResources().getStringArray(R.array.product_prices);
-
-        for (int i = 0; i < itemsList.length; i++) {
-            mItems.add(new Product(
-                    itemsImageResource.getResourceId(i, 0),
-                    itemsList[i],
-                    itemsRate.getFloat(i, 0),
-                    itemsPrice[i] + " Ft"));
-        }
-        itemsImageResource.recycle();
     }
 
     public void openLoginActivity() {
@@ -210,5 +180,68 @@ public class MainActivity extends AppCompatActivity {
         // Set the visibility of the login and logout menu items
         loginItem.setVisible(!isLoggedIn);
         logoutItem.setVisible(isLoggedIn);
+    }
+
+//    CRUD operations
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void createProducts() {
+        @SuppressLint("Recycle") TypedArray itemsImageResource = getResources().obtainTypedArray(R.array.product_images);
+        String[] itemsList = getResources().getStringArray(R.array.product_names);
+        @SuppressLint("Recycle") TypedArray itemsRate = getResources().obtainTypedArray(R.array.product_rates);
+        String[] itemsPrice = getResources().getStringArray(R.array.product_prices);
+
+        for (int i = 0; i < itemsList.length; i++) {
+            mItems.add(new Product(
+                    itemsImageResource.getResourceId(i, 0),
+                    itemsList[i],
+                    itemsRate.getFloat(i, 0),
+                    itemsPrice[i] + " Ft",
+                    0));
+        }
+        itemsImageResource.recycle();
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void readProducts() {
+        mItemList.clear();
+
+        mItems.orderBy("cartedCount", Query.Direction.DESCENDING).limit(10).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Product product = document.toObject(Product.class);
+                        product.setId(document.getId());
+                        mItemList.add(product);
+                    }
+
+                    if (mItemList.size() == 0) readProducts();
+
+                    mAdapter.notifyDataSetChanged();
+                });
+    }
+
+    public void updateProduct(@NonNull Product product) {
+        mItems.document(product._getId()).update("cartedCount", product.getCartedCount() + 1).
+                addOnFailureListener(failure ->
+                        Toast.makeText(
+                                this,
+                                product._getId() + " product can't be updated!", Toast.LENGTH_SHORT).show()
+                );
+        readProducts();
+    }
+
+    public void deleteProduct(@NonNull Product product) {
+        DocumentReference ref = mItems.document(product._getId());
+
+        ref.delete().addOnSuccessListener(success ->
+                        Log.d(LOG_TAG, "Successfully deleted product: " + product._getId()))
+                .addOnFailureListener(failure ->
+                        Toast.makeText(
+                                this,
+                                product._getId() + " product can't be deleted!", Toast.LENGTH_SHORT
+                        ).show()
+                );
+
+        readProducts();
     }
 }

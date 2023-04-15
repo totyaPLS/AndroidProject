@@ -68,7 +68,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/add_to_cart_relative_layout"
+            android:id="@+id/cart_linear_layout"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"

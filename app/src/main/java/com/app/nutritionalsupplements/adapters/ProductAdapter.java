@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.app.nutritionalsupplements.R;
+import com.app.nutritionalsupplements.activities.MainActivity;
 import com.app.nutritionalsupplements.models.Product;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -93,13 +94,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             mTitleTextView = itemView.findViewById(R.id.product_name);
             mRatingBar = itemView.findViewById(R.id.rating_bar);
             mPrice = itemView.findViewById(R.id.price_text);
-            itemView.findViewById(R.id.add_to_cart_button).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Log.e("Activity", "Item added to cart.");
-                }
-            });
-            linearLayout = itemView.findViewById(R.id.add_to_cart_relative_layout);
+            linearLayout = itemView.findViewById(R.id.cart_linear_layout);
         }
 
 
@@ -115,6 +110,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     .into(mProductImage);
 
             linearLayout.setVisibility(isUserLoggedIn ? View.VISIBLE : View.GONE);
+
+            if (isUserLoggedIn) {
+                itemView.findViewById(R.id.add_to_cart_button).setOnClickListener(view ->
+                        ((MainActivity) mContext).updateProduct(currentProduct)
+                );
+
+                itemView.findViewById(R.id.remove_from_cart_button).setOnClickListener(view ->
+                        ((MainActivity) mContext).deleteProduct(currentProduct)
+                );
+            }
         }
     }
 }
