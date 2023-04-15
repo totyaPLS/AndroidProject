@@ -26,7 +26,7 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements Filterable {
-    private boolean mUserIsLoggedIn;
+    private final boolean mUserIsLoggedIn;
     private final ArrayList<Product> mProductsData;
     private ArrayList<Product> mProductsDataAll;
     private final Context mContext;

@@ -17,13 +17,11 @@ import android.view.MenuItem;
 import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.adapters.ProductAdapter;
 import com.app.nutritionalsupplements.models.Product;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
