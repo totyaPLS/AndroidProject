@@ -13,6 +13,7 @@
     <string name="back">Back</string>
     <string name="logout">Logout</string>
     <string name="add_to_cart_button_description">Add to cart</string>
+    <string name="remove_from_cart_button_description">Remove from cart</string>
     <string name="product_name">Product Name</string>
     <string name="price_10_99">Price: $10.99</string>
     <string name="picture_of_the_product">Picture of the product</string>

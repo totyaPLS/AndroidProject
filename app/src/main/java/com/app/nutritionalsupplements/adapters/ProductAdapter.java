@@ -10,8 +10,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +21,6 @@ import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.models.Product;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
@@ -85,7 +84,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         private final TextView mTitleTextView;
         private final RatingBar mRatingBar;
         private final TextView mPrice;
-        private final RelativeLayout mSecondRelativeLayout;
+        private final LinearLayout linearLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -100,7 +99,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     Log.e("Activity", "Item added to cart.");
                 }
             });
-            mSecondRelativeLayout = itemView.findViewById(R.id.add_to_cart_relative_layout);
+            linearLayout = itemView.findViewById(R.id.add_to_cart_relative_layout);
         }
 
 
@@ -115,7 +114,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
                     .transform(new RoundedCorners(50))
                     .into(mProductImage);
 
-            mSecondRelativeLayout.setVisibility(isUserLoggedIn ? View.VISIBLE : View.GONE);
+            linearLayout.setVisibility(isUserLoggedIn ? View.VISIBLE : View.GONE);
         }
     }
 }

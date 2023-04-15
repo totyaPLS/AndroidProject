@@ -67,11 +67,12 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/add_to_cart_relative_layout"
             android:layout_width="100dp"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/add_to_cart_button"
@@ -88,7 +89,22 @@
                 tools:ignore="RtlSymmetry"
                 android:contentDescription="@string/add_to_cart_button_description"/>
 
-        </RelativeLayout>
+            <Button
+                android:id="@+id/remove_from_cart_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/remove_circle"
+                android:text=""
+                android:textSize="16sp"
+                android:paddingEnd="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                tools:ignore="RtlSymmetry"
+                android:contentDescription="@string/remove_from_cart_button_description"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
