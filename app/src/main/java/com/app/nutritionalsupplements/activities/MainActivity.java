@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -33,7 +34,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getName();
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private FirebaseUser user;
     MenuItem loginItem;
     MenuItem logoutItem;
@@ -75,15 +76,28 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        auth.signOut();
         Log.e(LOG_TAG, "onDestroy has run...");
         Log.e(LOG_TAG, "Logged out successfully!");
     }
 
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Check if the configuration change is due to a screen orientation change
+        if (newConfig.orientation != Configuration.ORIENTATION_PORTRAIT) {
+            // Don't sign out the user
+            return;
+        }
+
+        // Sign out the user
+        mAuth.signOut();
+    }
+
     private void initializeData() {
         Log.e(LOG_TAG, "_____INITIALIZE DATA METHOD CALLED_____");
-        auth = FirebaseAuth.getInstance();
-        user = auth.getCurrentUser();
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
 
         RecyclerView mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, GRID_NUMBER));
@@ -121,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void logout() {
         Log.e(LOG_TAG, "logout has run...");
-        auth.signOut();
+        mAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
