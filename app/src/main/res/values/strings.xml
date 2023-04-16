@@ -31,15 +31,23 @@
         <item>@drawable/pump</item>
         <item>@drawable/vitamins</item>
         <item>@drawable/whey</item>
+        <item>@drawable/chips</item>
+        <item>@drawable/cream</item>
+        <item>@drawable/iso</item>
+        <item>@drawable/muscle</item>
     </string-array>
 
     <string-array name="product_names">
         <item>BCAA 200g</item>
-        <item>Creatin Monohydrate 1kg</item>
+        <item>Creatine Monohydrate 1kg</item>
         <item>Omega 3</item>
         <item>Pump Pre-workout 330g</item>
         <item>Daily Vitamin Pack</item>
         <item>Pure Whey 1kg</item>
+        <item>Protein chips - Chili flavoured</item>
+        <item>Protein Cream</item>
+        <item>ISO Whey Zero 500g</item>
+        <item>Muscle Mass 4800g</item>
     </string-array>
 
     <string-array name="product_rates">
@@ -49,6 +57,10 @@
         <item>4.5</item>
         <item>4.0</item>
         <item>4.5</item>
+        <item>4.5</item>
+        <item>4.0</item>
+        <item>5.0</item>
+        <item>4.0</item>
     </string-array>
 
     <string-array name="product_prices">
@@ -58,5 +70,9 @@
         <item>5 990</item>
         <item>4 530</item>
         <item>8 990</item>
+        <item>780</item>
+        <item>3 490</item>
+        <item>11 190</item>
+        <item>24 090</item>
     </string-array>
 </resources>
