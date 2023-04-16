@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Nutritional Supplements</string>
+    <string name="app_name">SuppliFy</string>
     <string name="login">Login</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
@@ -17,6 +17,7 @@
     <string name="product_name">Product Name</string>
     <string name="price_10_99">Price: $10.99</string>
     <string name="picture_of_the_product">Picture of the product</string>
+    <string name="search">Search</string>
     <string-array name="occupation">
         <item>Employed</item>
         <item>Student</item>

@@ -1,5 +1,6 @@
 package com.app.nutritionalsupplements.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,10 +26,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> implements Filterable {
     private final boolean mUserIsLoggedIn;
-    private final ArrayList<Product> mProductsData;
+    private ArrayList<Product> mProductsData;
     private ArrayList<Product> mProductsDataAll;
     private final Context mContext;
     private int mLastPosition = -1;
@@ -77,13 +79,33 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     private final Filter shoppingFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
-            // TODO
-            return null;
+            ArrayList<Product> filteredList = new ArrayList<>();
+            FilterResults results = new FilterResults();
+
+            if (charSequence == null || charSequence.length() == 0) {
+                results.count = mProductsDataAll.size();
+                results.values = mProductsDataAll;
+            } else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+
+                for (Product product : mProductsDataAll) {
+                    if (product.getName().toLowerCase().contains(filterPattern)) {
+                        filteredList.add(product);
+                    }
+                }
+
+                results.count = filteredList.size();
+                results.values = filteredList;
+            }
+
+            return results;
         }
 
+        @SuppressLint("NotifyDataSetChanged")
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            // TODO
+            mProductsData = (ArrayList) filterResults.values;
+            notifyDataSetChanged();
         }
     };
 

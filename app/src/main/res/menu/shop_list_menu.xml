@@ -2,14 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/search_bar"
+        android:title="@string/search"
+        android:icon="@drawable/search"
+        app:showAsAction="ifRoom"
+        app:actionViewClass="android.widget.SearchView"/>
+
+    <item
         android:id="@+id/login"
         android:title="@string/login"
-        app:showAsAction="ifRoom"
-        android:visible="false"/>
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/logout"
         android:title="@string/logout"
-        app:showAsAction="ifRoom"
-        android:visible="false" />
+        app:showAsAction="ifRoom" />
 </menu>

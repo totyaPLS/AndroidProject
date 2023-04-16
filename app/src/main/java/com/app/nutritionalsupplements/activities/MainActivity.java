@@ -3,6 +3,7 @@ package com.app.nutritionalsupplements.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.app.nutritionalsupplements.R;
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG_TAG = MainActivity.class.getName();
     private FirebaseAuth mAuth;
     private FirebaseUser user;
+    MenuItem searchBar;
     MenuItem loginItem;
     MenuItem logoutItem;
     private ArrayList<Product> mItemList;
@@ -159,6 +162,21 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.shop_list_menu, menu);
         loginItem = menu.findItem(R.id.login);
         logoutItem = menu.findItem(R.id.logout);
+
+        searchBar = menu.findItem(R.id.search_bar);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchBar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                mAdapter.getFilter().filter(s);
+                return false;
+            }
+        });
 
         return super.onCreateOptionsMenu(menu);
     }
