@@ -7,8 +7,11 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -38,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter mAdapter;
     private static final int GRID_NUMBER = 1;
     private CollectionReference mItems;
+    private int numberOfProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +186,20 @@ public class MainActivity extends AppCompatActivity {
         logoutItem.setVisible(isLoggedIn);
     }
 
+    private void setLimitNumDependingOnNetworkConnectionType() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
+
+        if (activeNetwork != null && activeNetwork.isConnected()) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                this.numberOfProducts = 20;
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                this.numberOfProducts = 4;
+            }
+        }
+
+    }
+
 //    CRUD operations
 
     @SuppressLint("NotifyDataSetChanged")
@@ -204,9 +222,10 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("NotifyDataSetChanged")
     private void readProducts() {
-        mItemList.clear();
+        setLimitNumDependingOnNetworkConnectionType();
 
-        mItems.orderBy("cartedCount", Query.Direction.DESCENDING).limit(10).get()
+        mItemList.clear();
+        mItems.orderBy("cartedCount", Query.Direction.DESCENDING).limit(this.numberOfProducts).get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
                         Product product = document.toObject(Product.class);
