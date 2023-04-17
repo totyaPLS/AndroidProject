@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.app.nutritionalsupplements.Functions;
 import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.adapters.ProductAdapter;
 import com.app.nutritionalsupplements.models.Product;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter mAdapter;
     private static final int GRID_NUMBER = 1;
     private CollectionReference mItems;
-    private int numberOfProducts;
+    private int numberOfProducts = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e(LOG_TAG, "onStart has run...");
+        if (!Functions.deviceHasInternetConnection(this)) return;
         initializeData(); // initialize onStart because it changes after the login
     }
 
@@ -223,9 +225,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
 
         if (activeNetwork != null && activeNetwork.isConnected()) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                this.numberOfProducts = 20;
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                 this.numberOfProducts = 4;
             }
         }

@@ -1,7 +1,5 @@
 package com.app.nutritionalsupplements.activities;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.app.nutritionalsupplements.Functions;
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -75,6 +74,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void register(View view) {
+        if (!Functions.deviceHasInternetConnection(this)) return;
+
         String usernameStr = usernameET.getText().toString();
         String emailStr = emailET.getText().toString();
         String passwordStr = passwordET.getText().toString();
@@ -83,12 +84,26 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         String addressStr = postalAddressET.getText().toString();
         String occupation = spinner.getSelectedItem().toString();
 
-        if (!passwordStr.equals(passwordAgainStr)) {
-            Log.e(LOG_TAG, "The passwords do not match!");
-            // TODO: disable Sign Up button
+        if (fieldsAreFilledCorrectly(emailStr, passwordStr, passwordAgainStr))
+            registerUserIntoFirebase(emailStr, passwordStr);
+    }
+
+    private boolean fieldsAreFilledCorrectly(String email, String password, String passwordAgain) {
+        if (email.equals("") || password.equals("") || passwordAgain.equals("")) {
+            Toast.makeText(this,
+                    "Please fill every * marked fields!",
+                    Toast.LENGTH_SHORT).show();
+            return false;
         }
 
-        registerUserIntoFirebase(emailStr, passwordStr);
+        if (!password.equals(passwordAgain)) {
+            Toast.makeText(this,
+                    "The passwords do not match!",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private void registerUserIntoFirebase(String email, String password) {

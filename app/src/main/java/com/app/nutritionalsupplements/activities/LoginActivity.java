@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.app.nutritionalsupplements.Functions;
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -51,10 +52,17 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        String userNameStr = emailET.getText().toString();
+        if (!Functions.deviceHasInternetConnection(this)) return;
+
+        String emailStr = emailET.getText().toString();
         String userPasswordStr = userPasswordET.getText().toString();
 
-        auth.signInWithEmailAndPassword(userNameStr, userPasswordStr).addOnCompleteListener(this, task -> {
+        if (emailStr.equals("") || userPasswordStr.equals("")) {
+            Toast.makeText(this, "Please fill every field!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        auth.signInWithEmailAndPassword(emailStr, userPasswordStr).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 Log.e(LOG_TAG, "User logged in successfully!");
                 finish();
