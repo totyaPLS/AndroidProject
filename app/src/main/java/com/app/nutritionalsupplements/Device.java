@@ -7,8 +7,8 @@ import android.net.NetworkInfo;
 
 import com.app.nutritionalsupplements.activities.NoInternetConnectionActivity;
 
-public class Functions {
-    public static boolean deviceHasInternetConnection(Context context) {
+public class Device {
+    public static boolean hasInternetConnection(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
 
