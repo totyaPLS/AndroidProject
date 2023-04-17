@@ -7,6 +7,7 @@ public class Product {
     private float rateValue;
     private String price;
     private int cartedCount;
+    private String nameInLowerCase;
 
     public Product() {}
 
@@ -16,6 +17,7 @@ public class Product {
         this.rateValue = rateValue;
         this.price = price;
         this.cartedCount = cartedCount;
+        this.nameInLowerCase = name.toLowerCase();
     }
 
     public int getImage() {
@@ -44,5 +46,9 @@ public class Product {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getNameInLowerCase() {
+        return nameInLowerCase;
     }
 }

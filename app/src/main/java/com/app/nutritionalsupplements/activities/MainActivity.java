@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter mAdapter;
     private static final int GRID_NUMBER = 1;
     private CollectionReference mItems;
-    private int numberOfProducts;
+    private int numberOfProducts = 20;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,12 +173,39 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                mAdapter.getFilter().filter(s);
+                filterProducts(s);
                 return false;
             }
         });
 
+        searchView.setOnCloseListener(() -> {
+            readProducts();
+            return false;
+        });
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void filterProducts(String s) {
+        setLimitNumDependingOnNetworkConnectionType();
+
+        mItemList.clear();
+        mItems
+                .orderBy("nameInLowerCase")
+                .startAt(s.toLowerCase())
+                .endAt(s.toLowerCase() + "\uf8ff")
+                .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    Log.e(LOG_TAG, "queryDocumentSnapshots üres: " + queryDocumentSnapshots.isEmpty());
+
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        Log.e(LOG_TAG, document.getId() + " => " + document.getData());
+                        Product product = document.toObject(Product.class);
+                        product.setId(document.getId());
+                        mItemList.add(product);
+                    }
+                    mAdapter.notifyDataSetChanged();
+                });
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -223,9 +250,7 @@ public class MainActivity extends AppCompatActivity {
         NetworkInfo activeNetwork = connectivityManager.getActiveNetworkInfo();
 
         if (activeNetwork != null && activeNetwork.isConnected()) {
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                this.numberOfProducts = 20;
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
                 this.numberOfProducts = 4;
             }
         }
