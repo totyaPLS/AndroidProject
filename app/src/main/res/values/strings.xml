@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">SuppliFy</string>
     <string name="login">Login</string>
+    <string name="email">E-mail address</string>
     <string name="password">Password</string>
     <string name="name">Name</string>
     <string name="registration">Sign up</string>
     <string name="username">Username</string>
-    <string name="email">E-mail address*</string>
+    <string name="email_registration">E-mail address*</string>
     <string name="password_registration">Password*</string>
     <string name="passwordAgain">Password again*</string>
     <string name="mobile">Mobile</string>

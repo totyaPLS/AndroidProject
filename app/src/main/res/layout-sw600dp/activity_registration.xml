@@ -41,7 +41,7 @@
             android:layout_marginTop="@dimen/regEditTextLayoutMarginTop"
             android:autofillHints="email"
             android:ems="10"
-            android:hint="@string/email"
+            android:hint="@string/email_registration"
             android:inputType="textEmailAddress" />
 
         <EditText
