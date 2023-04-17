@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.app.nutritionalsupplements.Functions;
+import com.app.nutritionalsupplements.Device;
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        if (!Functions.deviceHasInternetConnection(this)) return;
+        if (!Device.hasInternetConnection(this)) return;
 
         String emailStr = emailET.getText().toString();
         String userPasswordStr = userPasswordET.getText().toString();

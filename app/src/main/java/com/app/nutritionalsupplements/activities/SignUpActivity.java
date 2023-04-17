@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.app.nutritionalsupplements.Functions;
+import com.app.nutritionalsupplements.Device;
 import com.app.nutritionalsupplements.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -74,7 +74,7 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     public void register(View view) {
-        if (!Functions.deviceHasInternetConnection(this)) return;
+        if (!Device.hasInternetConnection(this)) return;
 
         String usernameStr = usernameET.getText().toString();
         String emailStr = emailET.getText().toString();

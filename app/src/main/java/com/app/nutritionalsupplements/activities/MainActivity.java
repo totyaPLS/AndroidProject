@@ -21,7 +21,7 @@ import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.app.nutritionalsupplements.Functions;
+import com.app.nutritionalsupplements.Device;
 import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.adapters.ProductAdapter;
 import com.app.nutritionalsupplements.models.Product;
@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.e(LOG_TAG, "onStart has run...");
-        if (!Functions.deviceHasInternetConnection(this)) return;
+        if (!Device.hasInternetConnection(this)) return;
         initializeData(); // initialize onStart because it changes after the login
     }
 
@@ -175,7 +175,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                filterProducts(s);
+                if (Device.hasInternetConnection(MainActivity.this)) {
+                    filterProducts(s);
+                }/* else {
+                    mAdapter.getFilter().filter(s); // not working because of the internet check in onStart()
+                }*/
+
                 return false;
             }
         });
