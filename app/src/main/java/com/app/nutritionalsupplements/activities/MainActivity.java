@@ -170,17 +170,13 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
+                filterProducts(s);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                if (Device.hasInternetConnection(MainActivity.this)) {
-                    filterProducts(s);
-                }/* else {
-                    mAdapter.getFilter().filter(s); // not working because of the internet check in onStart()
-                }*/
-
+                // mAdapter.getFilter().filter(s);
                 return false;
             }
         });
@@ -202,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 .orderBy("nameInLowerCase")
                 .startAt(s.toLowerCase())
                 .endAt(s.toLowerCase() + "\uf8ff")
+                .limit(numberOfProducts)
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     Log.e(LOG_TAG, "queryDocumentSnapshots üres: " + queryDocumentSnapshots.isEmpty());
 
