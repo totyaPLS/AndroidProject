@@ -22,6 +22,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.app.nutritionalsupplements.Device;
+import com.app.nutritionalsupplements.NotificationHandler;
 import com.app.nutritionalsupplements.R;
 import com.app.nutritionalsupplements.adapters.ProductAdapter;
 import com.app.nutritionalsupplements.models.Product;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ProductAdapter mAdapter;
     private static final int GRID_NUMBER = 1;
     private CollectionReference mItems;
+    private NotificationHandler mNotificationHandler;
     private int numberOfProducts = 20;
 
     @Override
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.e(LOG_TAG, "OnCreate has run...");
         setContentView(R.layout.activity_main);
+
+        mNotificationHandler = new NotificationHandler(this);
     }
 
     @Override
@@ -307,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
                                 this,
                                 product._getId() + " product can't be updated!", Toast.LENGTH_SHORT).show()
                 );
+        mNotificationHandler.send(product.getName() + ": " + (product.getCartedCount()+1));
         readProducts();
     }
 
@@ -321,7 +326,7 @@ public class MainActivity extends AppCompatActivity {
                                 product._getId() + " product can't be deleted!", Toast.LENGTH_SHORT
                         ).show()
                 );
-
+        mNotificationHandler.cancel();
         readProducts();
     }
 }
