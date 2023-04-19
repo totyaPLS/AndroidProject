@@ -64,12 +64,11 @@ public class LoginActivity extends AppCompatActivity {
 
         auth.signInWithEmailAndPassword(emailStr, userPasswordStr).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                Log.e(LOG_TAG, "User logged in successfully!");
+                Log.d(LOG_TAG, "User logged in successfully!");
                 finish();
             } else {
-                Log.e(LOG_TAG, "User didn't log in successfully :(");
                 Toast.makeText(LoginActivity.this,
-                        "User didn't log in successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
+                        "User didn't login successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -79,6 +78,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SignUpActivity.class);
         intent.putExtra("SECRET_KEY", SECRET_KEY);
         startActivity(intent);
-        finish(); // FIXME: it shouldn't finish here. It has to finish after the registration was successful
+        finish();
     }
 }

@@ -109,10 +109,12 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     private void registerUserIntoFirebase(String email, String password) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                Log.d(LOG_TAG, "User created successfully!");
+                Toast.makeText(
+                        this,
+                        "Successfully registered!", Toast.LENGTH_SHORT
+                ).show();
                 startShoppingAfterSuccessfulRegistration();
             } else {
-                Log.e(LOG_TAG, "User wasn't created successfully :(");
                 Toast.makeText(SignUpActivity.this,
                         "User wasn't created successfully: " + Objects.requireNonNull(task.getException()).getMessage(),
                         Toast.LENGTH_SHORT).show();
@@ -120,12 +122,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
         });
     }
 
-    /**
-     * Finishes all opened activities in the stack and opens a new shopping activity.
-     */
     private void startShoppingAfterSuccessfulRegistration() {
         Intent intent = new Intent(this, MainActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
     }
@@ -135,12 +133,8 @@ public class SignUpActivity extends AppCompatActivity implements AdapterView.OnI
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        //TODO
-    }
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {}
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-        //TODO
-    }
+    public void onNothingSelected(AdapterView<?> adapterView) {}
 }

@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         super.onCreate(savedInstanceState);
-        Log.e(LOG_TAG, "OnCreate has run...");
         setContentView(R.layout.activity_main);
 
         mNotificationHandler = new NotificationHandler(this);
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.e(LOG_TAG, "onStart has run...");
         if (!Device.hasInternetConnection(this)) return;
         initializeData(); // initialize onStart because it changes after the login
     }
@@ -72,21 +70,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e(LOG_TAG, "onResume has run...");
         invalidateOptionsMenu(); // force the system to call onPrepareOptionsMenu() again
     }
 
     @Override
     protected void onPause() {
-        Log.e(LOG_TAG, "onPause has run...");
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.e(LOG_TAG, "onDestroy has run...");
-        Log.e(LOG_TAG, "Logged out successfully!");
     }
 
     @Override
@@ -104,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
-        Log.e(LOG_TAG, "_____INITIALIZE DATA METHOD CALLED_____");
         mAuth = FirebaseAuth.getInstance();
         user = mAuth.getCurrentUser();
 
@@ -135,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openLoginActivity() {
-        Log.e(LOG_TAG, "openLoginActivity has run...");
         if (user == null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -143,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logout() {
-        Log.e(LOG_TAG, "logout has run...");
         mAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -151,12 +142,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean checkLoginStatus() {
-        Log.e(LOG_TAG, "checkLoginStatus has run...");
         if (user == null) {
-            Log.e(LOG_TAG, "Null user detected!");
+            Log.d(LOG_TAG, "Null user detected!");
             return false;
         }
-        Log.e(LOG_TAG, "Authenticated user detected!" + user.getEmail());
+        Log.d(LOG_TAG, "Authenticated user detected!" + user.getEmail());
         return true;
     }
 
@@ -164,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.e(LOG_TAG, "onCreateOptionsMenu has run...");
         getMenuInflater().inflate(R.menu.shop_list_menu, menu);
         loginItem = menu.findItem(R.id.login);
         logoutItem = menu.findItem(R.id.logout);
@@ -204,10 +193,7 @@ public class MainActivity extends AppCompatActivity {
                 .endAt(s.toLowerCase() + "\uf8ff")
                 .limit(numberOfProducts)
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    Log.e(LOG_TAG, "queryDocumentSnapshots üres: " + queryDocumentSnapshots.isEmpty());
-
                     for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
-                        Log.e(LOG_TAG, document.getId() + " => " + document.getData());
                         Product product = document.toObject(Product.class);
                         product.setId(document.getId());
                         mItemList.add(product);
@@ -222,11 +208,9 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.login:
                 openLoginActivity();
-                Log.e(LOG_TAG, "Login clicked!");
                 return true;
             case R.id.logout:
                 logout();
-                Log.e(LOG_TAG, "Logout clicked!");
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -235,7 +219,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        Log.e(LOG_TAG, "onPrepareOptionsMenu has run...");
         loginItem = menu.findItem(R.id.login);
         logoutItem = menu.findItem(R.id.logout);
 
@@ -245,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setLoginItemsVisibility() {
-        Log.e(LOG_TAG, "setLoginItemsVisibility has run...");
         boolean isLoggedIn = checkLoginStatus();
 
         // Set the visibility of the login and logout menu items
@@ -319,7 +301,10 @@ public class MainActivity extends AppCompatActivity {
         DocumentReference ref = mItems.document(product._getId());
 
         ref.delete().addOnSuccessListener(success ->
-                        Log.d(LOG_TAG, "Successfully deleted product: " + product._getId()))
+                Toast.makeText(
+                                this,
+                                "Product deleted!", Toast.LENGTH_SHORT
+                        ).show())
                 .addOnFailureListener(failure ->
                         Toast.makeText(
                                 this,
