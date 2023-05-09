@@ -37,8 +37,7 @@
 - [ ] [CRUD műveletek mindegyike (#250-től lefele)](./app/src/main/java/com/app/nutritionalsupplements/activities/MainActivity.java) megvalósult és az adatbázis műveletek a konvenciónak  
 megfelelően külön szálon történnek
 
-- [ ] [Legalább 2 komplex Firestore lekérdezés (#191, #275)](./app/src/main/java/com/app/nutritionalsupplements/activities/MainActivity.java) megvalósítása,  
-amely indexet igényel (ide tartoznak: where feltétel, rendezés, léptetés, limitálás)
+- [ ] [Legalább 2 komplex Firestore lekérdezés (#191, #275)](./app/src/main/java/com/app/nutritionalsupplements/activities/MainActivity.java) megvalósítása, amely indexet igényel (ide tartoznak: where feltétel, rendezés, léptetés, limitálás)
 
 - [ ] Szubjektív pontozás a projekt egészére vonatkozólag:  
 ez 5-ről indul és le lehet vonni, ha igénytelen, összecsapott, látszik hogy nem foglalkozott vele, kísértetiesen hasonlít a videóban létrehozotthoz stb.
